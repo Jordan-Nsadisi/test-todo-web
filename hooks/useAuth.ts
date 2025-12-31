@@ -53,9 +53,12 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: authService.logout,
     onSuccess: () => {
-      console.log('Logout Success');
+      //nettoyer le store zustand
       clearAuth();
+
+      //supprimer les tokens localStorage
       localStorage.removeItem("auth-token");
+      localStorage.removeItem("todoApp-auth-store");
       toast.success("Déconnexion réussie !");
     },
     onError: (error: any) => {
