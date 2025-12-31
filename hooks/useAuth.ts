@@ -5,10 +5,18 @@ import toast from "react-hot-toast";
 
 
 export const useRegister = () => {
+  const { setUser, setToken } = useAuthStore();
+
   return useMutation({
     mutationFn: authService.register,
     onSuccess: (response: any) => {
-      console.log(response);
+      console.log('Register Success:', response);
+
+      if (response.user && response.token) {
+        setUser(response.user);
+        setToken(response.token);
+        localStorage.setItem("auth-token", response.token);
+      }
     },
     onError: (error: any) => {
       toast.error(error?.response?.data?.message);

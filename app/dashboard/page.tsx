@@ -7,13 +7,16 @@ import { TaskModal } from '@/components/TaskModal';
 import { TaskCard } from '@/components/TaskCard';
 import { Task, TaskFormData } from '@/types';
 import { CheckSquare, Plus, LogOut, User } from 'lucide-react';
+import { useAuthStore } from '@/store';
 
 export default function DashboardPage() {
-   // Mock user data - TODO: Replace with real auth
-   const user = {
-      firstName: 'Jordan',
-      lastName: 'Nsadisi'
-   };
+
+   const { user } = useAuthStore()
+
+   const firstname = user?.firstName;
+   const lastName = user?.lastName;
+
+   console.log("user:", user)
 
    // Mock tasks data with some examples
    const [tasks, setTasks] = useState<Task[]>([
@@ -114,7 +117,7 @@ export default function DashboardPage() {
                      <div>
                         <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
                         <p className="text-sm text-muted-foreground">
-                           Bienvenue, {user.firstName} {user.lastName}
+                           Bienvenue, {firstname} {lastName}
                         </p>
                      </div>
                   </div>
