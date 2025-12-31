@@ -10,12 +10,13 @@ export const useRegister = () => {
   return useMutation({
     mutationFn: authService.register,
     onSuccess: (response: any) => {
-      console.log('Register Success:', response);
 
-      if (response.user && response.token) {
+      if (response.user && response.access_token) {
         setUser(response.user);
-        setToken(response.token);
-        localStorage.setItem("auth-token", response.token);
+        setToken(response.access_token);
+        localStorage.setItem("auth-token", response.access_token);
+      } else {
+        console.log('missing user or access_token in response');
       }
     },
     onError: (error: any) => {
@@ -30,13 +31,14 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: authService.login,
     onSuccess: (response: any) => {
-      console.log('Login Success:', response);
 
-      if (response.user && response.token) {
+      if (response.user && response.access_token) {
         setUser(response.user);
-        setToken(response.token);
-        localStorage.setItem("auth-token", response.token);
+        setToken(response.access_token);
+        localStorage.setItem("auth-token", response.access_token);
         toast.success("Connexion réussie !");
+      } else {
+        console.log('missing access_token in response');
       }
     },
     onError: (error: any) => {
