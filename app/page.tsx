@@ -34,7 +34,7 @@ export default function Home() {
               <span className="text-primary">en toute simplicité</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Une application moderne et intuitive pour gérer efficacement 
+              Une application moderne et intuitive pour gérer efficacement
               vos projets et atteindre vos objectifs.
             </p>
           </div>
