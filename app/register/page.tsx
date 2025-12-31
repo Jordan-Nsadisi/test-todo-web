@@ -1,14 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/design-system/button';
 import { Input } from '@/components/ui/design-system/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/design-system/card';
 import { Label } from '@/components/ui/design-system/label';
 import { UserPlus, Eye, EyeOff } from 'lucide-react';
+import { useRegister } from '@/hooks/useAuth';
+import { useAuthStore } from '@/store';
+import { useRouter } from "next/navigation";
+
+
 
 export default function RegisterPage() {
+
+   const router = useRouter();
+   const registerMutation = useRegister();
+   const { isAuthenticated, _hasHydrated } = useAuthStore();
+
+   const [showPassword, setShowPassword] = useState(false);
+   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
    const [formData, setFormData] = useState({
       firstName: '',
       lastName: '',
@@ -16,9 +29,12 @@ export default function RegisterPage() {
       password: '',
       password_confirmation: ''
    });
-   const [showPassword, setShowPassword] = useState(false);
-   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-   const [isLoading, setIsLoading] = useState(false);
+
+   useEffect(() => {
+      if (_hasHydrated && isAuthenticated) {
+         router.replace("/");
+      }
+   }, [_hasHydrated, isAuthenticated, router]);
 
    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setFormData(prev => ({
@@ -29,15 +45,17 @@ export default function RegisterPage() {
 
    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
-      setIsLoading(true);
 
-      // TODO: Implement register logic
+      registerMutation.mutateAsync(formData);
+
       console.log('Register:', formData);
-
-      setTimeout(() => {
-         setIsLoading(false);
-      }, 1200);
    };
+
+   useEffect(() => {
+      if (registerMutation.isSuccess) {
+         router.replace("/dashboard");
+      }
+   }, [registerMutation.isSuccess, registerMutation.data]);
 
    return (
       <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
@@ -145,9 +163,10 @@ export default function RegisterPage() {
                   <Button
                      type="submit"
                      className="w-full"
-                     disabled={isLoading}
+                     disabled={registerMutation.isPending}
+                     onClick={handleSubmit}
                   >
-                     {isLoading ? (
+                     {registerMutation.isPending ? (
                         "Création du compte..."
                      ) : (
                         <>
