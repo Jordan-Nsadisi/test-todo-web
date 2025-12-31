@@ -6,6 +6,10 @@ export const auth = {
    logout: "/logout",
 }
 
+export const user = {
+   profile: "/profile",
+}
+
 export const tasks = {
    get: "/",
    create: "/",
