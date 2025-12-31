@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/design-system/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/design-system/card';
 import { TaskModal } from '@/components/TaskModal';
@@ -8,10 +9,12 @@ import { TaskCard } from '@/components/TaskCard';
 import { Task, TaskFormData } from '@/types';
 import { CheckSquare, Plus, LogOut, User } from 'lucide-react';
 import { useAuthStore } from '@/store';
+import { useLogout } from '@/hooks/useAuth';
 
 export default function DashboardPage() {
-
-   const { user } = useAuthStore()
+   const router = useRouter();
+   const { user } = useAuthStore();
+   const logoutMutation = useLogout();
 
    const firstname = user?.firstName;
    const lastName = user?.lastName;
@@ -44,9 +47,13 @@ export default function DashboardPage() {
    const [editingTask, setEditingTask] = useState<Task | null>(null);
    const [isLoading, setIsLoading] = useState(false);
 
-   const handleLogout = () => {
-      // TODO: Implement logout logic
-      console.log('Logout clicked');
+   const handleLogout = async () => {
+      try {
+         await logoutMutation.mutateAsync();
+         router.push('/login');
+      } catch (error) {
+         console.error('Logout failed:', error);
+      }
    };
 
    const handleOpenModal = () => {

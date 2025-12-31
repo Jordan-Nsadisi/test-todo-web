@@ -1,30 +1,49 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/design-system/button';
 import { Input } from '@/components/ui/design-system/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/design-system/card';
 import { Label } from '@/components/ui/design-system/label';
 import { LogIn, Eye, EyeOff } from 'lucide-react';
+import { useLogin } from '@/hooks/useAuth';
+import { useAuthStore } from '@/store';
 
 export default function LoginPage() {
+   const router = useRouter();
+   const loginMutation = useLogin();
+   const { isAuthenticated, _hasHydrated } = useAuthStore();
+
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
    const [showPassword, setShowPassword] = useState(false);
-   const [isLoading, setIsLoading] = useState(false);
+
+   useEffect(() => {
+      if (_hasHydrated && isAuthenticated) {
+         router.replace('/dashboard');
+      }
+   }, [_hasHydrated, isAuthenticated, router]);
 
    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
-      setIsLoading(true);
 
-      // TODO: Implement login logic
-      console.log('Login:', { email, password });
+      const formData = { email, password };
+      console.log('Login Data:', formData);
 
-      setTimeout(() => {
-         setIsLoading(false);
-      }, 1000);
+      try {
+         await loginMutation.mutateAsync(formData);
+      } catch (error) {
+         console.error('Login failed:', error);
+      }
    };
+
+   useEffect(() => {
+      if (loginMutation.isSuccess) {
+         router.replace('/dashboard');
+      }
+   }, [loginMutation.isSuccess, router]);
 
    return (
       <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
@@ -79,9 +98,9 @@ export default function LoginPage() {
                   <Button
                      type="submit"
                      className="w-full"
-                     disabled={isLoading}
+                     disabled={loginMutation.isPending}
                   >
-                     {isLoading ? (
+                     {loginMutation.isPending ? (
                         "Connexion..."
                      ) : (
                         <>
