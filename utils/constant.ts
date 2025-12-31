@@ -1,4 +1,4 @@
 export const API_ENDPOINTS = {
-   auth: "/auth",
-   task: "/tasks",
+   auth: "auth",
+   task: "tasks",
 }

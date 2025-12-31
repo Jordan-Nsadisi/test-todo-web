@@ -8,6 +8,8 @@ const API = axios.create({
 	},
 });
 
+console.log('🔗 API Base URL:', process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api");
+
 // Request interceptor for auth token
 API.interceptors.request.use((config: any) => {
 	const token = localStorage.getItem("auth-token");

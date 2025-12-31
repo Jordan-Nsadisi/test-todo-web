@@ -46,9 +46,15 @@ export default function RegisterPage() {
    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
 
-      registerMutation.mutateAsync(formData);
+      console.log('🟡 BEFORE mutation - Register Data:', formData);
 
-      console.log('Register:', formData);
+      try {
+         console.log('🔵 CALLING mutateAsync...');
+         await registerMutation.mutateAsync(formData);
+         console.log('🟢 Mutation completed successfully');
+      } catch (error) {
+         console.error('🔴 Registration failed:', error);
+      }
    };
 
    useEffect(() => {
