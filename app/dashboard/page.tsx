@@ -10,7 +10,7 @@ import { Task, TaskFormData } from '@/types';
 import { CheckSquare, Plus, LogOut, User } from 'lucide-react';
 import { useAuthStore } from '@/store';
 import { useLogout } from '@/hooks/useAuth';
-import { useCreateTask, useGetTaskByUser, useUpdateTask } from '@/hooks/useTasks';
+import { useCreateTask, useGetTaskByUser, useUpdateTask, useDeleteTask } from '@/hooks/useTasks';
 
 export default function DashboardPage() {
    const router = useRouter();
@@ -18,6 +18,7 @@ export default function DashboardPage() {
    const logoutMutation = useLogout();
    const createTaskMutation = useCreateTask();
    const updateTaskMutation = useUpdateTask();
+   const deleteTaskMutation = useDeleteTask();
    const getUserTasks = useGetTaskByUser()
 
    const firstname = user?.firstName;
@@ -110,8 +111,19 @@ export default function DashboardPage() {
    };
 
    const handleDeleteTask = async (taskId: number) => {
-      // TODO: Implement useDeleteTask hook
-      console.log('Delete task functionality not yet implemented:', taskId);
+
+      const isConfirmed = window.confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?');
+      if (!isConfirmed) return;
+
+      try {
+
+         await deleteTaskMutation.mutateAsync(taskId);
+
+         //supprimer du state local
+         setTasks(prev => prev.filter(task => task.id !== taskId));
+
+      } catch (error) {
+      }
    };
 
    const handleStatusChange = async (taskId: number, status: 'PENDING' | 'COMPLETED' | 'CANCELED') => {
