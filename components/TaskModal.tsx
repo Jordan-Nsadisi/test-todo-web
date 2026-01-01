@@ -64,11 +64,11 @@ export function TaskModal({ isOpen, onClose, onSave, task = null, isLoading = fa
    return (
       <Dialog open={isOpen} onOpenChange={handleClose}>
          <DialogContent className="sm:max-w-[500px] bg-white dark:bg-white border-2 shadow-xl">
-            <DialogHeader className="pb-4 border-b">
-               <DialogTitle className="flex items-center space-x-2 text-lg font-semibold">
+            <DialogHeader className="pb-3 md:pb-4 border-b">
+               <DialogTitle className="flex items-center space-x-1 md:space-x-2 text-base md:text-lg font-semibold">
                   <span>{task ? 'Modifier la tâche' : 'Nouvelle tâche'}</span>
                </DialogTitle>
-               <DialogDescription className="text-muted-foreground">
+               <DialogDescription className="text-muted-foreground text-sm">
                   {task
                      ? 'Modifiez les informations de votre tâche'
                      : 'Créez une nouvelle tâche pour organiser votre travail'
@@ -76,8 +76,8 @@ export function TaskModal({ isOpen, onClose, onSave, task = null, isLoading = fa
                </DialogDescription>
             </DialogHeader>
 
-            <form onSubmit={handleSubmit} className="space-y-6 pt-4">
-               <div className="space-y-2">
+            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6 pt-3 md:pt-4">
+               <div className="space-y-1 md:space-y-2">
                   <Label htmlFor="title" className="text-sm font-medium">Titre *</Label>
                   <Input
                      id="title"
@@ -94,7 +94,7 @@ export function TaskModal({ isOpen, onClose, onSave, task = null, isLoading = fa
                   </p>
                </div>
 
-               <div className="space-y-2">
+               <div className="space-y-1 md:space-y-2">
                   <Label htmlFor="description" className="text-sm font-medium">Description *</Label>
                   <Textarea
                      id="description"
@@ -107,7 +107,7 @@ export function TaskModal({ isOpen, onClose, onSave, task = null, isLoading = fa
                   />
                </div>
 
-               <DialogFooter className="flex space-x-2 pt-4 border-t">
+               <DialogFooter className="flex space-x-2 pt-3 md:pt-4 border-t">
                   <Button
                      type="button"
                      variant="outline"
@@ -115,7 +115,7 @@ export function TaskModal({ isOpen, onClose, onSave, task = null, isLoading = fa
                      disabled={isLoading}
                      className="flex-1 sm:flex-none"
                   >
-                     <X className="mr-2 h-4 w-4" />
+                     <X className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" />
                      Annuler
                   </Button>
                   <Button
@@ -127,7 +127,7 @@ export function TaskModal({ isOpen, onClose, onSave, task = null, isLoading = fa
                         "Sauvegarde..."
                      ) : (
                         <>
-                           <Save className="mr-2 h-4 w-4" />
+                           <Save className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" />
                            {task ? 'Mettre à jour' : 'Créer'}
                         </>
                      )}

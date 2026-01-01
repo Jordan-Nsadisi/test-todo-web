@@ -80,9 +80,9 @@ export default function LoginPage() {
                            onClick={() => setShowPassword(!showPassword)}
                         >
                            {showPassword ? (
-                              <EyeOff className="h-4 w-4" />
+                              <EyeOff className="h-3 w-3 md:h-4 md:w-4" />
                            ) : (
-                              <Eye className="h-4 w-4" />
+                              <Eye className="h-3 w-3 md:h-4 md:w-4" />
                            )}
                         </Button>
                      </div>
@@ -97,7 +97,7 @@ export default function LoginPage() {
                         "Connexion..."
                      ) : (
                         <>
-                           <LogIn className="mr-2 h-4 w-4" />
+                           <LogIn className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" />
                            Se connecter
                         </>
                      )}

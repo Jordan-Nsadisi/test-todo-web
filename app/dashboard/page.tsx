@@ -158,22 +158,22 @@ export default function DashboardPage() {
       <div className="min-h-screen bg-background">
          {/* Header */}
          <header className="border-b border-border bg-card">
-            <div className="container mx-auto px-4 py-4">
+            <div className="container mx-auto px-4 py-3 md:py-4">
                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                     <CheckSquare className="h-8 w-8 text-primary" />
+                  <div className="flex items-center space-x-2 md:space-x-3">
+                     <CheckSquare className="h-6 w-6 md:h-8 md:w-8 text-primary" />
                      <div>
-                        <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
-                        <p className="text-sm text-muted-foreground">
+                        <h1 className="text-lg md:text-2xl font-bold text-foreground">Dashboard</h1>
+                        <p className="text-xs md:text-sm text-muted-foreground">
                            Bienvenue, {firstname} {lastName}
                         </p>
                      </div>
                   </div>
 
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2 md:space-x-4">
                      <Button variant="outline" size="sm">
-                        <User className="mr-2 h-4 w-4" />
-                        Profil
+                        <User className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" />
+                        <span className="hidden sm:inline">Profil</span>
                      </Button>
                      <Button
                         variant="ghost"
@@ -181,8 +181,8 @@ export default function DashboardPage() {
                         onClick={handleLogout}
                         className="text-red-600 hover:text-red-700 hover:bg-red-50"
                      >
-                        <LogOut className="mr-2 h-4 w-4" />
-                        Déconnexion
+                        <LogOut className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" />
+                        <span className="hidden sm:inline">Déconnexion</span>
                      </Button>
                   </div>
                </div>
@@ -190,18 +190,19 @@ export default function DashboardPage() {
          </header>
 
          {/* main*/}
-         <main className="container mx-auto px-4 py-8">
-            <div className="flex items-center justify-between mb-8">
+         <main className="container mx-auto px-4 py-6 md:py-8">
+            <div className="flex items-center justify-between mb-6 md:mb-8">
                <div>
-                  <h2 className="text-3xl font-bold text-foreground">Mes Tâches</h2>
-                  <p className="text-muted-foreground mt-1">
+                  <h2 className="text-2xl md:text-3xl font-bold text-foreground">Mes Tâches</h2>
+                  <p className="text-muted-foreground text-sm md:text-base mt-1">
                      Gérez et organisez vos activités quotidiennes
                   </p>
                </div>
 
-               <Button className="flex items-center space-x-2" onClick={handleOpenModal}>
-                  <Plus className="h-4 w-4" />
-                  <span>Nouvelle tâche</span>
+               <Button className="flex items-center space-x-1 md:space-x-2" onClick={handleOpenModal}>
+                  <Plus className="h-3 w-3 md:h-4 md:w-4" />
+                  <span className="hidden sm:inline">Nouvelle tâche</span>
+                  <span className="sm:hidden">Nouvelle</span>
                </Button>
             </div>
 
@@ -255,20 +256,20 @@ export default function DashboardPage() {
 
                {/* null tasks */}
                {!getUserTasks.isPending && !getUserTasks.isError && tasks.length === 0 && (
-                  <Card className="text-center py-12">
+                  <Card className="text-center py-8 md:py-12">
                      <CardHeader>
-                        <CheckSquare className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                        <CardTitle className="text-xl text-muted-foreground">
+                        <CheckSquare className="h-12 w-12 md:h-16 md:w-16 text-muted-foreground mx-auto mb-3 md:mb-4" />
+                        <CardTitle className="text-lg md:text-xl text-muted-foreground">
                            Aucune tâche pour le moment
                         </CardTitle>
-                        <CardDescription>
+                        <CardDescription className="text-sm md:text-base">
                            Vous n'avez pas encore défini de tâches.
                            Commencez par créer votre première tâche !
                         </CardDescription>
                      </CardHeader>
                      <CardContent>
-                        <Button className="flex items-center space-x-2 mx-auto" onClick={handleOpenModal}>
-                           <Plus className="h-4 w-4" />
+                        <Button className="flex items-center space-x-1 md:space-x-2 mx-auto" onClick={handleOpenModal}>
+                           <Plus className="h-3 w-3 md:h-4 md:w-4" />
                            <span>Créer ma première tâche</span>
                         </Button>
                      </CardContent>
@@ -277,7 +278,7 @@ export default function DashboardPage() {
 
                {/* tasks grid */}
                {!getUserTasks.isPending && tasks.length > 0 && (
-                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  <div className="grid gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3">
                      {tasks.map((task) => (
                         <TaskCard
                            key={task.id}

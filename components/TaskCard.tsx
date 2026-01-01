@@ -81,15 +81,15 @@ export function TaskCard({ task, onEdit, onDelete, onStatusChange }: TaskCardPro
             <div className="flex items-start justify-between">
                <div className="flex-1 space-y-1">
                   <div className="flex items-center space-x-1 md:space-x-2">
-                     <h3 className="font-semibold text-base md:text-lg text-foreground line-clamp-1">
+                     <h3 className="font-semibold text-sm md:text-base lg:text-lg text-foreground line-clamp-1">
                         {task.title}
                      </h3>
                      <Badge variant={statusInfo.variant} className="flex items-center space-x-1">
-                        <StatusIcon className="h-3 w-3" />
-                        <span>{statusInfo.label}</span>
+                        <StatusIcon className="h-2 w-2 md:h-3 md:w-3" />
+                        <span className="text-xs">{statusInfo.label}</span>
                      </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-xs md:text-sm text-muted-foreground">
                      Créée le {formatDate(task.created_at)}
                   </p>
                </div>
@@ -97,40 +97,40 @@ export function TaskCard({ task, onEdit, onDelete, onStatusChange }: TaskCardPro
                <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                      <Button variant="ghost" size="sm" disabled={isLoading}>
-                        <MoreHorizontal className="h-4 w-4" />
+                        <MoreHorizontal className="h-3 w-3 md:h-4 md:w-4" />
                      </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                      <DropdownMenuItem onClick={handleEdit}>
-                        <Edit className="mr-2 h-4 w-4" />
+                        <Edit className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" />
                         Modifier
                      </DropdownMenuItem>
                      <DropdownMenuItem
                         onClick={() => handleStatusChange('PENDING')}
                         disabled={task.status === 'PENDING'}
                      >
-                        <Clock className="mr-2 h-4 w-4" />
+                        <Clock className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" />
                         Marquer en attente
                      </DropdownMenuItem>
                      <DropdownMenuItem
                         onClick={() => handleStatusChange('COMPLETED')}
                         disabled={task.status === 'COMPLETED'}
                      >
-                        <CheckCircle className="mr-2 h-4 w-4" />
+                        <CheckCircle className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" />
                         Marquer terminée
                      </DropdownMenuItem>
                      <DropdownMenuItem
                         onClick={() => handleStatusChange('CANCELED')}
                         disabled={task.status === 'CANCELED'}
                      >
-                        <XCircle className="mr-2 h-4 w-4" />
+                        <XCircle className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" />
                         Marquer annulée
                      </DropdownMenuItem>
                      <DropdownMenuItem
                         onClick={handleDelete}
                         className="text-destructive focus:text-destructive"
                      >
-                        <Trash2 className="mr-2 h-4 w-4" />
+                        <Trash2 className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" />
                         Supprimer
                      </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -139,7 +139,7 @@ export function TaskCard({ task, onEdit, onDelete, onStatusChange }: TaskCardPro
          </CardHeader>
 
          <CardContent className="pt-0">
-            <p className="text-foreground leading-relaxed line-clamp-3">
+            <p className="text-sm md:text-base text-foreground leading-relaxed line-clamp-3">
                {task.description}
             </p>
 

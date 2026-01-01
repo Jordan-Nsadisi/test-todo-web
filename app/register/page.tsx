@@ -137,12 +137,12 @@ export default function RegisterPage() {
                            className="absolute right-0 top-0 h-full px-3"
                            onClick={() => setShowPassword(!showPassword)}
                         >
-                           {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                           {showPassword ? <EyeOff className="h-3 w-3 md:h-4 md:w-4" /> : <Eye className="h-3 w-3 md:h-4 md:w-4" />}
                         </Button>
                      </div>
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="space-y-1 md:space-y-2">
                      <Label htmlFor="password_confirmation">Confirmer le mot de passe</Label>
                      <div className="relative">
                         <Input
@@ -161,7 +161,7 @@ export default function RegisterPage() {
                            className="absolute right-0 top-0 h-full px-3"
                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                         >
-                           {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                           {showConfirmPassword ? <EyeOff className="h-3 w-3 md:h-4 md:w-4" /> : <Eye className="h-3 w-3 md:h-4 md:w-4" />}
                         </Button>
                      </div>
                   </div>
@@ -176,7 +176,7 @@ export default function RegisterPage() {
                         "Création du compte..."
                      ) : (
                         <>
-                           <UserPlus className="mr-2 h-4 w-4" />
+                           <UserPlus className="mr-1 md:mr-2 h-3 w-3 md:h-4 md:w-4" />
                            Créer mon compte
                         </>
                      )}
