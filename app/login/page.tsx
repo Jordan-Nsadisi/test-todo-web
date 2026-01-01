@@ -42,14 +42,14 @@ export default function LoginPage() {
       <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
          <Card className="w-full max-w-md">
             <CardHeader className="space-y-1 text-center">
-               <CardTitle className="text-2xl font-bold">Se connecter</CardTitle>
+               <CardTitle className="text-xl md:text-2xl font-bold">Se connecter</CardTitle>
                <CardDescription>
                   Entrez vos identifiants pour accéder à vos tâches
                </CardDescription>
             </CardHeader>
             <CardContent>
-               <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="space-y-2">
+               <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
+                  <div className="space-y-1 md:space-y-2">
                      <Label htmlFor="email">Email</Label>
                      <Input
                         id="email"
@@ -61,7 +61,7 @@ export default function LoginPage() {
                      />
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="space-y-1 md:space-y-2">
                      <Label htmlFor="password">Mot de passe</Label>
                      <div className="relative">
                         <Input
@@ -104,7 +104,7 @@ export default function LoginPage() {
                   </Button>
                </form>
 
-               <div className="mt-6 text-center text-sm">
+               <div className="mt-4 md:mt-6 text-center text-sm">
                   <span className="text-muted-foreground">Pas encore de compte ? </span>
                   <Link
                      href="/register"

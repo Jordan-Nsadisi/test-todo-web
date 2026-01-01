@@ -77,11 +77,11 @@ export function TaskCard({ task, onEdit, onDelete, onStatusChange }: TaskCardPro
 
    return (
       <Card className="hover:shadow-md transition-shadow">
-         <CardHeader className="pb-3">
+         <CardHeader className="pb-2 md:pb-3">
             <div className="flex items-start justify-between">
                <div className="flex-1 space-y-1">
-                  <div className="flex items-center space-x-2">
-                     <h3 className="font-semibold text-lg text-foreground line-clamp-1">
+                  <div className="flex items-center space-x-1 md:space-x-2">
+                     <h3 className="font-semibold text-base md:text-lg text-foreground line-clamp-1">
                         {task.title}
                      </h3>
                      <Badge variant={statusInfo.variant} className="flex items-center space-x-1">
@@ -144,7 +144,7 @@ export function TaskCard({ task, onEdit, onDelete, onStatusChange }: TaskCardPro
             </p>
 
             {task.updated_at !== task.created_at && (
-               <p className="text-xs text-muted-foreground mt-3">
+               <p className="text-xs text-muted-foreground mt-2 md:mt-3">
                   Modifiée le {formatDate(task.updated_at)}
                </p>
             )}

@@ -67,15 +67,15 @@ export default function RegisterPage() {
       <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
          <Card className="w-full max-w-md">
             <CardHeader className="space-y-1 text-center">
-               <CardTitle className="text-2xl font-bold">Créer un compte</CardTitle>
+               <CardTitle className="text-xl md:text-2xl font-bold">Créer un compte</CardTitle>
                <CardDescription>
                   Rejoignez-nous pour organiser vos tâches
                </CardDescription>
             </CardHeader>
             <CardContent>
-               <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                     <div className="space-y-2">
+               <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
+                  <div className="grid grid-cols-2 gap-3 md:gap-4">
+                     <div className="space-y-1 md:space-y-2">
                         <Label htmlFor="firstName">Prénom</Label>
                         <Input
                            id="firstName"
@@ -88,7 +88,7 @@ export default function RegisterPage() {
                            required
                         />
                      </div>
-                     <div className="space-y-2">
+                     <div className="space-y-1 md:space-y-2">
                         <Label htmlFor="lastName">Nom</Label>
                         <Input
                            id="lastName"
@@ -103,7 +103,7 @@ export default function RegisterPage() {
                      </div>
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="space-y-1 md:space-y-2">
                      <Label htmlFor="email">Email</Label>
                      <Input
                         id="email"
@@ -116,7 +116,7 @@ export default function RegisterPage() {
                      />
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="space-y-1 md:space-y-2">
                      <Label htmlFor="password">Mot de passe</Label>
                      <div className="relative">
                         <Input
@@ -183,7 +183,7 @@ export default function RegisterPage() {
                   </Button>
                </form>
 
-               <div className="mt-6 text-center text-sm">
+               <div className="mt-4 md:mt-6 text-center text-sm">
                   <span className="text-muted-foreground">Déjà un compte ? </span>
                   <Link
                      href="/login"

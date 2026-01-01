@@ -7,13 +7,13 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
       {/* Header */}
-      <header className="container mx-auto px-4 py-6">
+      <header className="container mx-auto px-4 py-4 md:py-6">
         <nav className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <CheckSquare className="h-8 w-8 text-primary" />
-            <h1 className="text-2xl font-bold text-foreground">TodoApp</h1>
+          <div className="flex items-center space-x-1 md:space-x-2">
+            <CheckSquare className="h-7 w-7 md:h-8 md:w-8 text-primary" />
+            <h1 className="text-xl md:text-2xl font-bold text-foreground">TodoApp</h1>
           </div>
-          <div className="space-x-4">
+          <div className="space-x-2 md:space-x-4">
             <Button variant="ghost" asChild>
               <Link href="/login">Se connecter</Link>
             </Button>
@@ -25,27 +25,27 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <main className="container mx-auto px-4 py-16">
-        <div className="text-center space-y-8">
-          <div className="space-y-4">
-            <h2 className="text-4xl md:text-6xl font-bold text-foreground">
+      <main className="container mx-auto px-4 py-12 md:py-16">
+        <div className="text-center space-y-6 md:space-y-8">
+          <div className="space-y-3 md:space-y-4">
+            <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-foreground">
               Organisez vos tâches
               <br />
               <span className="text-primary">en toute simplicité</span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
               Une application moderne et intuitive pour gérer efficacement
               vos projets et atteindre vos objectifs.
             </p>
           </div>
 
-          <div className="space-x-4">
-            <Button size="lg" asChild>
+          <div className="space-x-2 md:space-x-4">
+            <Button size="default" className="md:text-base" asChild>
               <Link href="/register">
                 Commencer gratuitement
               </Link>
             </Button>
-            <Button variant="outline" size="lg" asChild>
+            <Button variant="outline" size="default" className="md:text-base" asChild>
               <Link href="/login">
                 J'ai déjà un compte
               </Link>
@@ -54,10 +54,10 @@ export default function Home() {
         </div>
 
         {/* Features */}
-        <div className="grid md:grid-cols-3 gap-8 mt-24">
+        <div className="grid md:grid-cols-3 gap-6 md:gap-8 mt-16 md:mt-24">
           <Card>
             <CardHeader>
-              <CheckSquare className="h-12 w-12 text-primary mb-4" />
+              <CheckSquare className="h-10 w-10 md:h-12 md:w-12 text-primary mb-3 md:mb-4" />
               <CardTitle>Gestion simple</CardTitle>
               <CardDescription>
                 Créez, modifiez et suivez vos tâches en quelques clics
@@ -67,7 +67,7 @@ export default function Home() {
 
           <Card>
             <CardHeader>
-              <Users className="h-12 w-12 text-primary mb-4" />
+              <Users className="h-10 w-10 md:h-12 md:w-12 text-primary mb-3 md:mb-4" />
               <CardTitle>Interface moderne</CardTitle>
               <CardDescription>
                 Design épuré et responsive adapté à tous vos appareils
@@ -77,7 +77,7 @@ export default function Home() {
 
           <Card>
             <CardHeader>
-              <Zap className="h-12 w-12 text-primary mb-4" />
+              <Zap className="h-10 w-10 md:h-12 md:w-12 text-primary mb-3 md:mb-4" />
               <CardTitle>Productivité</CardTitle>
               <CardDescription>
                 Organisez votre travail et boostez votre efficacité
