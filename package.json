@@ -29,7 +29,7 @@
     "react-hook-form": "^7.69.0",
     "react-hot-toast": "^2.5.2",
     "tailwind-merge": "^3.4.0",
-    "zod": "^4.2.1",
+    "zod": "^3.23.8",
     "zustand": "^5.0.9"
   },
   "devDependencies": {
@@ -37,7 +37,6 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/react-query": "^1.2.9",
     "autoprefixer": "^10.4.23",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
