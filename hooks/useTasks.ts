@@ -41,3 +41,15 @@ export const useUpdateTask = () => {
       }
    });
 };
+
+export const useDeleteTask = () => {
+   return useMutation({
+      mutationFn: (id: number) => tasksServices.deleteTask(id),
+      onSuccess: (response: any) => {
+         toast.success("Tâche supprimée avec succès !");
+      },
+      onError: (error: any) => {
+         toast.error(error?.response?.data?.message || "Erreur lors de la suppression");
+      }
+   });
+};
