@@ -15,4 +15,5 @@ export const tasks = {
    create: "/",
    update: "/",
    delete: "/",
+   getTaskByUser: "/user/",
 }
