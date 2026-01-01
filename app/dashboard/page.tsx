@@ -22,6 +22,10 @@ export default function DashboardPage() {
    const firstname = user?.firstName;
    const lastName = user?.lastName;
 
+   const [tasks, setTasks] = useState<Task[]>([]); //pour optimiser le rendu
+   const [isModalOpen, setIsModalOpen] = useState(false);
+   const [editingTask, setEditingTask] = useState<Task | null>(null);
+
    console.log("user:", user)
 
    useEffect(() => {
@@ -31,26 +35,13 @@ export default function DashboardPage() {
       }
    }, [user]);
 
-   // Update tasks state when getUserTasks succeeds
    useEffect(() => {
       if (getUserTasks.isSuccess && getUserTasks.data) {
-         console.log('✅ Tasks fetched successfully:', getUserTasks.data);
-         setTasks(getUserTasks.data);
+         setTasks(getUserTasks.data.tasks);
+      } else {
+         setTasks([]);
       }
    }, [getUserTasks.isSuccess, getUserTasks.data]);
-
-   // Handle getUserTasks error
-   useEffect(() => {
-      if (getUserTasks.isError) {
-         console.error('❌ Failed to fetch tasks:', getUserTasks.error);
-      }
-   }, [getUserTasks.isError, getUserTasks.error]);
-
-   // Tasks state - will be populated by real API calls
-   const [tasks, setTasks] = useState<Task[]>([]);
-
-   const [isModalOpen, setIsModalOpen] = useState(false);
-   const [editingTask, setEditingTask] = useState<Task | null>(null);
 
    const handleLogout = async () => {
       try {
@@ -80,10 +71,7 @@ export default function DashboardPage() {
       } else {
          // Create new task using real API
          try {
-            console.log('🔵 Creating new task:', formData);
-
             const response = await createTaskMutation.mutateAsync(formData);
-            console.log('✅ Task created successfully:', response);
 
             // Add the new task to the local state
             const newTask: Task = {
@@ -91,8 +79,8 @@ export default function DashboardPage() {
                ...formData,
                user_id: user?.id || 1,
                status: formData.status || 'PENDING',
-               created_at: response.created_at || new Date().toISOString(),
-               updated_at: response.updated_at || new Date().toISOString()
+               created_at: response.created_at,
+               updated_at: response.updated_at
             };
 
             setTasks(prev => [newTask, ...prev]);
@@ -100,8 +88,6 @@ export default function DashboardPage() {
             setEditingTask(null);
 
          } catch (error) {
-            console.error('❌ Failed to create task:', error);
-            // Modal stays open on error so user can retry
          }
       }
    };
@@ -151,7 +137,7 @@ export default function DashboardPage() {
             </div>
          </header>
 
-         {/* Main Content */}
+         {/* main*/}
          <main className="container mx-auto px-4 py-8">
             <div className="flex items-center justify-between mb-8">
                <div>
@@ -167,7 +153,7 @@ export default function DashboardPage() {
                </Button>
             </div>
 
-            {/* Tasks Content */}
+            {/* tasks */}
             <div className="space-y-6">
                {/* Loading State */}
                {getUserTasks.isPending && (
@@ -191,7 +177,7 @@ export default function DashboardPage() {
                   </div>
                )}
 
-               {/* Error State */}
+               {/* errors stats */}
                {getUserTasks.isError && !getUserTasks.isPending && (
                   <Card className="text-center py-12 border-red-200 bg-red-50">
                      <CardHeader>
@@ -215,7 +201,7 @@ export default function DashboardPage() {
                   </Card>
                )}
 
-               {/* Empty State */}
+               {/* null tasks */}
                {!getUserTasks.isPending && !getUserTasks.isError && tasks.length === 0 && (
                   <Card className="text-center py-12">
                      <CardHeader>
@@ -237,7 +223,7 @@ export default function DashboardPage() {
                   </Card>
                )}
 
-               {/* Tasks Grid */}
+               {/* tasks grid */}
                {!getUserTasks.isPending && tasks.length > 0 && (
                   <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                      {tasks.map((task) => (
@@ -253,7 +239,7 @@ export default function DashboardPage() {
                )}
             </div>
 
-            {/* Task Modal */}
+            {/* task modal */}
             <TaskModal
                isOpen={isModalOpen}
                onClose={() => setIsModalOpen(false)}
