@@ -33,7 +33,7 @@ Avant de commencer, assurez-vous d'avoir installé :
 
 ### 1. **Cloner le projet**
 ```bash
-git clone https://github.com/Jordan-Nsadisi/test_todoAPI.git
+git clone https://github.com/Jordan-Nsadisi/test-todo-web.git
 cd test-todoweb
 ```
 
