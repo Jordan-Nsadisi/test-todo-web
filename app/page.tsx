@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Button } from "@/components/ui/design-system/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/design-system/card';
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/design-system/card';
 import { CheckSquare, Users, Zap } from 'lucide-react';
 
 export default function Home() {
