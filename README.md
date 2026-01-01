@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TodoApp - Gestionnaire de Tâches Moderne
 
-## Getting Started
+Une application web moderne de gestion de tâches développée avec **Next.js 14**, **TypeScript**, et **Tailwind CSS**. Responsive et optimisée mobile-first.
 
-First, run the development server:
+## Fonctionnalités
 
+**Authentification complète** (Inscription, Connexion, Déconnexion)  
+**CRUD Tâches** (Créer, Lire, Modifier, Supprimer)  
+**Gestion des statuts** (En attente, Terminée, Annulée)  
+**Interface responsive** (Desktop, Tablet, Mobile)  
+**State management** avec Zustand + persistance  
+**API Integration** avec React Query  
+**Toast notifications** pour feedback utilisateur  
+**Design system** avec composants réutilisables  
+
+## Technologies
+
+| Frontend | State | Styling | Tools |
+|----------|-------|---------|--------|
+| **Next.js 14** | **Zustand** | **Tailwind CSS** | **TypeScript** |
+| **React 19** | **React Query** | **Radix UI** | **ESLint** |
+| **React Hook Form** | **AsyncStorage** | **Lucide Icons** | **Prettier** |
+
+## Prérequis
+
+Avant de commencer, assurez-vous d'avoir installé :
+
+- **Node.js** v18+ ([Télécharger](https://nodejs.org/))
+- **npm** ou **yarn** (inclus avec Node.js)
+- **Git** ([Télécharger](https://git-scm.com/))
+
+## Installation Rapide
+
+### 1. **Cloner le projet**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Jordan-Nsadisi/test_todoAPI.git
+cd test-todoweb
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. **Installer les dépendances**
+```bash
+npm install
+# ou
+yarn install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. **Configuration API**
+le fichier `.env.local` est deja existant et à la racine du repos, non ignoré par git
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. **Lancer le serveur de développement**
+```bash
+npm run dev
+# ou
+yarn dev
+```
 
-## Learn More
+### 5. **Ouvrir l'application**
+Accédez à l'adresse du server dans votre navigateur.
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🌐 Configuration API Backend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Laravel API Endpoints
+L'application communique avec une API Laravel via ces endpoints :
 
-## Deploy on Vercel
+```typescript
+// Authentification
+POST /auth/register    // Inscription
+POST /auth/login       // Connexion  
+POST /auth/logout      // Déconnexion
+GET  /auth/user        // Profil utilisateur
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+// Tâches
+POST   /tasks          // Créer tâche
+GET    /tasks/user/:id // Lister tâches utilisateur
+PUT    /tasks/:id      // Modifier tâche
+DELETE /tasks/:id      // Supprimer tâche
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Variables d'environnement
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000/api
+```
+
+## 🎨 Personnalisation
+
+### Couleurs du thème (Tailwind)
+```javascript
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#3B82F6',      // Bleu principal
+        background: '#FFFFFF',   // Fond clair
+        muted: '#6B7280',       // Texte secondaire
+      }
+    }
+  }
+}
+```
+
+### Responsivité Mobile
+L'app utilise une approche **mobile-first** :
+```css
+/* Mobile par défaut */
+text-sm space-x-2 h-3 w-3
+
+/* Tablette et plus */
+md:text-base md:space-x-4 md:h-4 md:w-4
+```
+
+
+**Développé avec ❤️ par le teste d'insertion Mr Mukanza**
