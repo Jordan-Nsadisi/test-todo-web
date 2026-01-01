@@ -127,8 +127,24 @@ export default function DashboardPage() {
    };
 
    const handleStatusChange = async (taskId: number, status: 'PENDING' | 'COMPLETED' | 'CANCELED') => {
-      // TODO: Implement useUpdateTaskStatus hook
-      console.log('Update task status functionality not yet implemented:', taskId, status);
+      try {
+
+         await updateTaskMutation.mutateAsync({
+            id: taskId,
+            updates: { status }
+         });
+
+         console.log('✅ Task status updated successfully');
+
+         setTasks(prev => prev.map(task =>
+            task.id === taskId
+               ? { ...task, status, updated_at: new Date().toISOString() }
+               : task
+         ));
+
+      } catch (error) {
+         console.error('❌ Failed to update task status:', error);
+      }
    };
 
    return (
