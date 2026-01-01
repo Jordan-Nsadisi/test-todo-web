@@ -21,4 +21,12 @@ export const tasksServices = {
       return response.data;
    },
 
+   async updateTask(id: number, updates: Partial<TaskFormData>): Promise<any> {
+      const response = await API.put(
+         `${API_ENDPOINTS.task}${tasks.update}${id}`,
+         updates
+      );
+      return response.data;
+   },
+
 }
