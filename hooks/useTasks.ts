@@ -15,3 +15,15 @@ export const useCreateTask = () => {
       }
    });
 };
+
+export const useGetTaskByUser = () => {
+   return useMutation({
+      mutationFn: (userId: string) => tasksServices.getTaskByUser(userId),
+      onSuccess: ({ response }: any) => {
+         console.log("taches::", response);
+      },
+      onError: (error: any) => {
+         toast.error(error?.response?.data?.message);
+      }
+   });
+};
