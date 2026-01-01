@@ -35,7 +35,7 @@ export function TaskModal({ isOpen, onClose, onSave, task = null, isLoading = fa
                status: task.status
             });
          } else {
-            
+
             setFormData({
                title: '',
                description: '',
