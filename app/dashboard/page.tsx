@@ -10,13 +10,14 @@ import { Task, TaskFormData } from '@/types';
 import { CheckSquare, Plus, LogOut, User } from 'lucide-react';
 import { useAuthStore } from '@/store';
 import { useLogout } from '@/hooks/useAuth';
-import { useCreateTask, useGetTaskByUser } from '@/hooks/useTasks';
+import { useCreateTask, useGetTaskByUser, useUpdateTask } from '@/hooks/useTasks';
 
 export default function DashboardPage() {
    const router = useRouter();
    const { user } = useAuthStore();
    const logoutMutation = useLogout();
    const createTaskMutation = useCreateTask();
+   const updateTaskMutation = useUpdateTask();
    const getUserTasks = useGetTaskByUser()
 
    const firstname = user?.firstName;
@@ -64,10 +65,28 @@ export default function DashboardPage() {
 
    const handleSaveTask = async (formData: TaskFormData) => {
       if (editingTask) {
-         // TODO: Implement useUpdateTask hook for editing
-         console.log('Update task functionality not yet implemented:', editingTask.id, formData);
-         setIsModalOpen(false);
-         setEditingTask(null);
+         //mis à jour
+         try {
+            const response = await updateTaskMutation.mutateAsync({
+               id: editingTask.id,
+               updates: formData
+            });
+
+            setTasks(prev => prev.map(task =>
+               task.id === editingTask.id
+                  ? {
+                     ...task,
+                     ...formData,
+                     updated_at: response.updated_at
+                  }
+                  : task
+            ));
+
+            setIsModalOpen(false);
+            setEditingTask(null);
+
+         } catch (error) {
+         }
       } else {
          // Create new task using real API
          try {
