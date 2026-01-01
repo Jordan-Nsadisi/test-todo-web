@@ -31,7 +31,6 @@ export default function DashboardPage() {
 
    useEffect(() => {
       if (user && user.id) {
-         console.log('🔍 Fetching tasks for user:', user.id);
          getUserTasks.mutate(user.id);
       }
    }, [user]);
@@ -49,7 +48,6 @@ export default function DashboardPage() {
          await logoutMutation.mutateAsync();
          router.push('/login');
       } catch (error) {
-         console.error('Logout failed:', error);
       }
    };
 
