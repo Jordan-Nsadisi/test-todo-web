@@ -23,27 +23,8 @@ export default function DashboardPage() {
 
    console.log("user:", user)
 
-   // Mock tasks data with some examples
-   const [tasks, setTasks] = useState<Task[]>([
-      {
-         id: 1,
-         title: 'Finaliser le projet',
-         description: 'Terminer le développement de l\'application todo avec toutes les fonctionnalités requises',
-         status: 'PENDING',
-         user_id: 1,
-         created_at: '2024-01-20T14:30:00.000Z',
-         updated_at: '2024-01-20T14:30:00.000Z'
-      },
-      {
-         id: 2,
-         title: 'Réviser le code',
-         description: 'Effectuer une revue complète du code et optimiser les performances',
-         status: 'COMPLETED',
-         user_id: 1,
-         created_at: '2024-01-18T11:20:00.000Z',
-         updated_at: '2024-01-21T16:45:00.000Z'
-      }
-   ]);
+   // Tasks state - will be populated by real API calls
+   const [tasks, setTasks] = useState<Task[]>([]);
 
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [editingTask, setEditingTask] = useState<Task | null>(null);
@@ -69,15 +50,8 @@ export default function DashboardPage() {
 
    const handleSaveTask = async (formData: TaskFormData) => {
       if (editingTask) {
-         // TODO: Update existing task (implement useUpdateTask later)
-         console.log('Updating task:', editingTask.id, formData);
-
-         // For now, update locally
-         setTasks(prev => prev.map(task =>
-            task.id === editingTask.id
-               ? { ...task, ...formData, updated_at: new Date().toISOString() }
-               : task
-         ));
+         // TODO: Implement useUpdateTask hook for editing
+         console.log('Update task functionality not yet implemented:', editingTask.id, formData);
          setIsModalOpen(false);
          setEditingTask(null);
       } else {
@@ -110,19 +84,13 @@ export default function DashboardPage() {
    };
 
    const handleDeleteTask = async (taskId: number) => {
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
-      setTasks(prev => prev.filter(task => task.id !== taskId));
+      // TODO: Implement useDeleteTask hook
+      console.log('Delete task functionality not yet implemented:', taskId);
    };
 
    const handleStatusChange = async (taskId: number, status: 'PENDING' | 'COMPLETED' | 'CANCELED') => {
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 300));
-      setTasks(prev => prev.map(task =>
-         task.id === taskId
-            ? { ...task, status, updated_at: new Date().toISOString() }
-            : task
-      ));
+      // TODO: Implement useUpdateTaskStatus hook
+      console.log('Update task status functionality not yet implemented:', taskId, status);
    };
 
    return (
