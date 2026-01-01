@@ -14,7 +14,7 @@ export const tasksServices = {
       return response.data;
    },
 
-   async getTaskByUser(userId: string): Promise<any> {
+   async getTaskByUser(userId: number): Promise<any> {
       const response = await API.get(
          `${API_ENDPOINTS.task}${tasks.getTaskByUser}${userId}`
       );

@@ -18,7 +18,7 @@ export const useCreateTask = () => {
 
 export const useGetTaskByUser = () => {
    return useMutation({
-      mutationFn: (userId: string) => tasksServices.getTaskByUser(userId),
+      mutationFn: (userId: number) => tasksServices.getTaskByUser(userId),
       onSuccess: ({ response }: any) => {
          console.log("taches::", response);
       },

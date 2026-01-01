@@ -10,18 +10,25 @@ import { Task, TaskFormData } from '@/types';
 import { CheckSquare, Plus, LogOut, User } from 'lucide-react';
 import { useAuthStore } from '@/store';
 import { useLogout } from '@/hooks/useAuth';
-import { useCreateTask } from '@/hooks/useTasks';
+import { useCreateTask, useGetTaskByUser } from '@/hooks/useTasks';
 
 export default function DashboardPage() {
    const router = useRouter();
    const { user } = useAuthStore();
    const logoutMutation = useLogout();
    const createTaskMutation = useCreateTask();
+   const getUserTasks = useGetTaskByUser()
 
    const firstname = user?.firstName;
    const lastName = user?.lastName;
 
    console.log("user:", user)
+
+   useEffect(() => {
+      if (user) {
+         getUserTasks.mutate(user.id);
+      }
+   }, []);
 
    // Tasks state - will be populated by real API calls
    const [tasks, setTasks] = useState<Task[]>([]);
