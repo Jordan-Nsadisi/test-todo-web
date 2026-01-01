@@ -14,7 +14,7 @@ import { useCreateTask, useGetTaskByUser, useUpdateTask, useDeleteTask } from '@
 
 export default function DashboardPage() {
    const router = useRouter();
-   const { user } = useAuthStore();
+   const { user, isAuthenticated, _hasHydrated } = useAuthStore();
    const logoutMutation = useLogout();
    const createTaskMutation = useCreateTask();
    const updateTaskMutation = useUpdateTask();
@@ -27,6 +27,13 @@ export default function DashboardPage() {
    const [tasks, setTasks] = useState<Task[]>([]); //pour optimiser le rendu
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [editingTask, setEditingTask] = useState<Task | null>(null);
+
+   // Vérification d'authentification et d'hydration
+   useEffect(() => {
+      if (_hasHydrated && !isAuthenticated) {
+         router.push('/login');
+      }
+   }, [_hasHydrated, isAuthenticated, router]);
 
    console.log("user:", user)
 
