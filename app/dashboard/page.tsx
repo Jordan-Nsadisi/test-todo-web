@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/design-system/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/design-system/card';
@@ -10,11 +10,13 @@ import { Task, TaskFormData } from '@/types';
 import { CheckSquare, Plus, LogOut, User } from 'lucide-react';
 import { useAuthStore } from '@/store';
 import { useLogout } from '@/hooks/useAuth';
+import { useCreateTask } from '@/hooks/useTasks';
 
 export default function DashboardPage() {
    const router = useRouter();
    const { user } = useAuthStore();
    const logoutMutation = useLogout();
+   const createTaskMutation = useCreateTask();
 
    const firstname = user?.firstName;
    const lastName = user?.lastName;
@@ -45,7 +47,6 @@ export default function DashboardPage() {
 
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [editingTask, setEditingTask] = useState<Task | null>(null);
-   const [isLoading, setIsLoading] = useState(false);
 
    const handleLogout = async () => {
       try {
@@ -67,34 +68,45 @@ export default function DashboardPage() {
    };
 
    const handleSaveTask = async (formData: TaskFormData) => {
-      setIsLoading(true);
-
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 800));
-
       if (editingTask) {
-         // Update existing task
+         // TODO: Update existing task (implement useUpdateTask later)
+         console.log('Updating task:', editingTask.id, formData);
+
+         // For now, update locally
          setTasks(prev => prev.map(task =>
             task.id === editingTask.id
                ? { ...task, ...formData, updated_at: new Date().toISOString() }
                : task
          ));
+         setIsModalOpen(false);
+         setEditingTask(null);
       } else {
-         // Create new task
-         const newTask: Task = {
-            id: Date.now(),
-            ...formData,
-            user_id: 1,
-            status: formData.status || 'PENDING',
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString()
-         };
-         setTasks(prev => [newTask, ...prev]);
-      }
+         // Create new task using real API
+         try {
+            console.log('🔵 Creating new task:', formData);
 
-      setIsLoading(false);
-      setIsModalOpen(false);
-      setEditingTask(null);
+            const response = await createTaskMutation.mutateAsync(formData);
+            console.log('✅ Task created successfully:', response);
+
+            // Add the new task to the local state
+            const newTask: Task = {
+               id: response.id || Date.now(), // Use API ID or fallback
+               ...formData,
+               user_id: user?.id || 1,
+               status: formData.status || 'PENDING',
+               created_at: response.created_at || new Date().toISOString(),
+               updated_at: response.updated_at || new Date().toISOString()
+            };
+
+            setTasks(prev => [newTask, ...prev]);
+            setIsModalOpen(false);
+            setEditingTask(null);
+
+         } catch (error) {
+            console.error('❌ Failed to create task:', error);
+            // Modal stays open on error so user can retry
+         }
+      }
    };
 
    const handleDeleteTask = async (taskId: number) => {
@@ -205,7 +217,7 @@ export default function DashboardPage() {
                onClose={() => setIsModalOpen(false)}
                onSave={handleSaveTask}
                task={editingTask}
-               isLoading={isLoading}
+               isLoading={createTaskMutation.isPending}
             />
          </main>
       </div>
