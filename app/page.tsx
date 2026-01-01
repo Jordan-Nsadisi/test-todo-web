@@ -25,7 +25,7 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <main className="container mx-auto px-4 py-12 md:py-16">
+      <main className="container mx-auto px-4 py-16">
         <div className="text-center space-y-6 md:space-y-8">
           <div className="space-y-3 md:space-y-4">
             <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-foreground">
@@ -39,13 +39,27 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="space-x-2 md:space-x-4">
+          <div className="hidden md:inline-block space-x-4">
             <Button size="default" className="md:text-base" asChild>
               <Link href="/register">
                 Commencer gratuitement
               </Link>
             </Button>
             <Button variant="outline" size="default" className="md:text-base" asChild>
+              <Link href="/login">
+                J'ai déjà un compte
+              </Link>
+            </Button>
+          </div>
+
+          {/* mobile ui button  */}
+          <div className="md:hidden flex flex-col space-y-2 w-fit mx-auto">
+            <Button size="sm" asChild>
+              <Link href="/register">
+                Commencer gratuitement
+              </Link>
+            </Button>
+            <Button variant="outline" size="sm" asChild>
               <Link href="/login">
                 J'ai déjà un compte
               </Link>
