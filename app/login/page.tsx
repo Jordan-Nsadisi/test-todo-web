@@ -20,30 +20,23 @@ export default function LoginPage() {
    const [password, setPassword] = useState('');
    const [showPassword, setShowPassword] = useState(false);
 
-   useEffect(() => {
-      if (_hasHydrated && isAuthenticated) {
-         router.replace('/dashboard');
-      }
-   }, [_hasHydrated, isAuthenticated, router]);
-
    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
 
       const formData = { email, password };
-      console.log('Login Data:', formData);
 
       try {
          await loginMutation.mutateAsync(formData);
       } catch (error) {
-         console.error('Login failed:', error);
+         //erreur lancé par la mutation
       }
    };
 
    useEffect(() => {
-      if (loginMutation.isSuccess) {
+      if (loginMutation.isSuccess && _hasHydrated && isAuthenticated) {
          router.replace('/dashboard');
       }
-   }, [loginMutation.isSuccess, router]);
+   }, [loginMutation.isSuccess, _hasHydrated, isAuthenticated, router]);
 
    return (
       <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
