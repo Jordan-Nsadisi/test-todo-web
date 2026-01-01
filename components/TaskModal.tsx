@@ -5,16 +5,15 @@ import { Button } from '@/components/ui/design-system/button';
 import { Input } from '@/components/ui/design-system/input';
 import { Textarea } from '@/components/ui/design-system/textarea';
 import { Label } from '@/components/ui/design-system/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/design-system/select';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/design-system/dialog';
 import { Task, TaskFormData } from '@/types';
 import { Save, X } from 'lucide-react';
 
 interface TaskModalProps {
-   isOpen: boolean;
-   onClose: () => void;
-   onSave: (data: TaskFormData) => void;
-   task?: Task | null; // For editing existing task
+   isOpen: boolean; //pour contrôler l'ouverture du modal
+   onClose: () => void; //pour fermer le modal
+   onSave: (data: TaskFormData) => void; //pour sauvegarder la tâche
+   task?: Task | null; //pour modifier une tâche existante
    isLoading?: boolean;
 }
 
@@ -25,18 +24,18 @@ export function TaskModal({ isOpen, onClose, onSave, task = null, isLoading = fa
       status: 'PENDING'
    });
 
-   // Reset form when modal opens/closes or task changes
+   //remplir le formulaire si on modifie une tâche
    useEffect(() => {
       if (isOpen) {
          if (task) {
-            // Editing existing task
+            //la tâche existe, on est en mode édition
             setFormData({
                title: task.title,
                description: task.description,
                status: task.status
             });
          } else {
-            // Creating new task
+            
             setFormData({
                title: '',
                description: '',
@@ -64,12 +63,12 @@ export function TaskModal({ isOpen, onClose, onSave, task = null, isLoading = fa
 
    return (
       <Dialog open={isOpen} onOpenChange={handleClose}>
-         <DialogContent className="sm:max-w-[500px]">
-            <DialogHeader>
-               <DialogTitle className="flex items-center space-x-2">
+         <DialogContent className="sm:max-w-[500px] bg-white dark:bg-white border-2 shadow-xl">
+            <DialogHeader className="pb-4 border-b">
+               <DialogTitle className="flex items-center space-x-2 text-lg font-semibold">
                   <span>{task ? 'Modifier la tâche' : 'Nouvelle tâche'}</span>
                </DialogTitle>
-               <DialogDescription>
+               <DialogDescription className="text-muted-foreground">
                   {task
                      ? 'Modifiez les informations de votre tâche'
                      : 'Créez une nouvelle tâche pour organiser votre travail'
@@ -77,9 +76,9 @@ export function TaskModal({ isOpen, onClose, onSave, task = null, isLoading = fa
                </DialogDescription>
             </DialogHeader>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6 pt-4">
                <div className="space-y-2">
-                  <Label htmlFor="title">Titre *</Label>
+                  <Label htmlFor="title" className="text-sm font-medium">Titre *</Label>
                   <Input
                      id="title"
                      type="text"
@@ -88,6 +87,7 @@ export function TaskModal({ isOpen, onClose, onSave, task = null, isLoading = fa
                      onChange={(e) => handleChange('title', e.target.value)}
                      maxLength={25}
                      required
+                     className="bg-white"
                   />
                   <p className="text-xs text-muted-foreground">
                      {formData.title.length}/25 caractères
@@ -95,7 +95,7 @@ export function TaskModal({ isOpen, onClose, onSave, task = null, isLoading = fa
                </div>
 
                <div className="space-y-2">
-                  <Label htmlFor="description">Description *</Label>
+                  <Label htmlFor="description" className="text-sm font-medium">Description *</Label>
                   <Textarea
                      id="description"
                      placeholder="Décrivez votre tâche en détail..."
@@ -103,32 +103,17 @@ export function TaskModal({ isOpen, onClose, onSave, task = null, isLoading = fa
                      onChange={(e) => handleChange('description', e.target.value)}
                      rows={4}
                      required
+                     className="bg-white resize-none"
                   />
                </div>
 
-               <div className="space-y-2">
-                  <Label htmlFor="status">Statut</Label>
-                  <Select
-                     value={formData.status}
-                     onValueChange={(value) => handleChange('status', value)}
-                  >
-                     <SelectTrigger>
-                        <SelectValue placeholder="Sélectionner un statut" />
-                     </SelectTrigger>
-                     <SelectContent>
-                        <SelectItem value="PENDING">En attente</SelectItem>
-                        <SelectItem value="COMPLETED">Terminée</SelectItem>
-                        <SelectItem value="CANCELED">Annulée</SelectItem>
-                     </SelectContent>
-                  </Select>
-               </div>
-
-               <DialogFooter className="flex space-x-2">
+               <DialogFooter className="flex space-x-2 pt-4 border-t">
                   <Button
                      type="button"
                      variant="outline"
                      onClick={handleClose}
                      disabled={isLoading}
+                     className="flex-1 sm:flex-none"
                   >
                      <X className="mr-2 h-4 w-4" />
                      Annuler
@@ -136,6 +121,7 @@ export function TaskModal({ isOpen, onClose, onSave, task = null, isLoading = fa
                   <Button
                      type="submit"
                      disabled={isLoading || !formData.title.trim() || !formData.description.trim()}
+                     className="flex-1 sm:flex-none"
                   >
                      {isLoading ? (
                         "Sauvegarde..."
