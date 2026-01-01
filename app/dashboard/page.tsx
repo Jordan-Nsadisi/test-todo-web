@@ -25,10 +25,26 @@ export default function DashboardPage() {
    console.log("user:", user)
 
    useEffect(() => {
-      if (user) {
+      if (user && user.id) {
+         console.log('🔍 Fetching tasks for user:', user.id);
          getUserTasks.mutate(user.id);
       }
-   }, []);
+   }, [user]);
+
+   // Update tasks state when getUserTasks succeeds
+   useEffect(() => {
+      if (getUserTasks.isSuccess && getUserTasks.data) {
+         console.log('✅ Tasks fetched successfully:', getUserTasks.data);
+         setTasks(getUserTasks.data);
+      }
+   }, [getUserTasks.isSuccess, getUserTasks.data]);
+
+   // Handle getUserTasks error
+   useEffect(() => {
+      if (getUserTasks.isError) {
+         console.error('❌ Failed to fetch tasks:', getUserTasks.error);
+      }
+   }, [getUserTasks.isError, getUserTasks.error]);
 
    // Tasks state - will be populated by real API calls
    const [tasks, setTasks] = useState<Task[]>([]);
@@ -153,7 +169,54 @@ export default function DashboardPage() {
 
             {/* Tasks Content */}
             <div className="space-y-6">
-               {tasks.length === 0 ? (
+               {/* Loading State */}
+               {getUserTasks.isPending && (
+                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                     {[...Array(3)].map((_, index) => (
+                        <Card key={index} className="animate-pulse">
+                           <CardHeader className="space-y-3">
+                              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                              <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                           </CardHeader>
+                           <CardContent className="space-y-3">
+                              <div className="h-3 bg-gray-200 rounded"></div>
+                              <div className="h-3 bg-gray-200 rounded w-5/6"></div>
+                              <div className="flex space-x-2">
+                                 <div className="h-8 bg-gray-200 rounded w-16"></div>
+                                 <div className="h-8 bg-gray-200 rounded w-16"></div>
+                              </div>
+                           </CardContent>
+                        </Card>
+                     ))}
+                  </div>
+               )}
+
+               {/* Error State */}
+               {getUserTasks.isError && !getUserTasks.isPending && (
+                  <Card className="text-center py-12 border-red-200 bg-red-50">
+                     <CardHeader>
+                        <CheckSquare className="h-16 w-16 text-red-400 mx-auto mb-4" />
+                        <CardTitle className="text-xl text-red-600">
+                           Erreur de chargement
+                        </CardTitle>
+                        <CardDescription className="text-red-500">
+                           Impossible de récupérer vos tâches. Vérifiez votre connexion.
+                        </CardDescription>
+                     </CardHeader>
+                     <CardContent>
+                        <Button
+                           variant="outline"
+                           className="flex items-center space-x-2 mx-auto border-red-300 text-red-600 hover:bg-red-100"
+                           onClick={() => getUserTasks.mutate(user?.id!)}
+                        >
+                           <span>Réessayer</span>
+                        </Button>
+                     </CardContent>
+                  </Card>
+               )}
+
+               {/* Empty State */}
+               {!getUserTasks.isPending && !getUserTasks.isError && tasks.length === 0 && (
                   <Card className="text-center py-12">
                      <CardHeader>
                         <CheckSquare className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
@@ -172,7 +235,10 @@ export default function DashboardPage() {
                         </Button>
                      </CardContent>
                   </Card>
-               ) : (
+               )}
+
+               {/* Tasks Grid */}
+               {!getUserTasks.isPending && tasks.length > 0 && (
                   <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                      {tasks.map((task) => (
                         <TaskCard
